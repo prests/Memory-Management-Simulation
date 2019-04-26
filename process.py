@@ -7,3 +7,4 @@ class Process(object):
         self.endTimes = []
         self.completed = 0
         self.done = False
+        self.running = False
