@@ -3,6 +3,13 @@ import sys
 
 import process
 
+import FirstFit
+
+def resetProcesses(processes):
+    for i in processes:
+        i.done = False
+        i.completed = 0
+
 def main(frames, frameSize, inputFile, tMemoryMove):
     processesList = []
     for line in inputFile:
@@ -13,6 +20,8 @@ def main(frames, frameSize, inputFile, tMemoryMove):
         for i in range(len(arr)):
             if i == 0:
                 p.name = arr[i]
+            elif i == 1:
+                p.size = int(arr[i])
             else:
                 time = arr[i].split('/')
                 p.arrivalTimes.append(int(time[0]))
@@ -26,6 +35,10 @@ def main(frames, frameSize, inputFile, tMemoryMove):
             print(i.arrivalTimes[j])
             print(i.endTimes[j])
     '''
+
+    FirstFit.main(frames, frameSize, processesList, tMemoryMove, True)
+    resetProcesses(processesList)
+    FirstFit.main(frames, frameSize, processesList, tMemoryMove, False)
 
 
 '''
