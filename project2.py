@@ -1,6 +1,33 @@
 #!/usr/bin/python3
 import sys
 
+import process
+
+def main(frames, frameSize, inputFile, tMemoryMove):
+    processesList = []
+    for line in inputFile:
+        if(line[len(line)-1] == '\n'):
+            line = line[:len(line)-1] 
+        arr = line.split(' ')
+        p = process.Process()
+        for i in range(len(arr)):
+            if i == 0:
+                p.name = arr[i]
+            else:
+                time = arr[i].split('/')
+                p.arrivalTimes.append(int(time[0]))
+                p.endTimes.append(int(time[1]))
+        processesList.append(p)
+    
+    '''
+    for i in processesList:
+        print(i.name)
+        for j in range(len(i.arrivalTimes)):
+            print(i.arrivalTimes[j])
+            print(i.endTimes[j])
+    '''
+
+
 '''
     Parse Command Line Arguments
 '''
@@ -41,3 +68,5 @@ if __name__ == "__main__":
     except:
         print("Invalid time provided for memory move (not integer)")
         sys.exit()
+    
+    main(frames, frameSize, inputFile, tMemoryMove)
