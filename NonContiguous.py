@@ -74,50 +74,24 @@ def main(frame, frameSize, processes, tMemoryMove, contiguous):
             if(not i.done and i.arrivalTimes[i.completed] == t and not i.running):
                 print("time %dms: Process %s arrived (requires %d frames)" %(t, i.name, i.size))
                 count = 0
-                location = 0
-                numDots = 0
                 for j in range(len(memoryArr)): #Checking if it can be added
-                    if(memoryArr[j] != '.'):
-                        count = 0
-                    else:
-                        if(count == 0):
-                            location = j
+                    if(memoryArr[j] == '.'):
                         count += 1
-                        numDots += 1
-                        if(count == i.size): #Enough space for process
-                            print("time %dms: Placed process %s:" %(t, i.name))
+                        if(count == i.size):
+                            count = 0
+                            for k in range(len(memoryArr)):
+                                if(memoryArr[k] == '.'):
+                                    memoryArr[k] = i.name
+                                    count += 1
+                                if(count == i.size):
+                                    break
                             i.running = True
                             i.startTime = t
-                            for k in range(i.size):
-                                memoryArr[location+k] = i.name
+                            print("time %dms: Placed process %s:" %(t, i.name))
                             printMemory(frame, frameSize, memoryArr)
                             break
                     
                     if(j == len(memoryArr)-1): #Not enought space
-                        if(contiguous and numDots >= i.size): #Eligible for defragmentation
-                            print("time %dms: Cannot place process %s -- starting defragmentation" %(t, i.name))
-                            framesMoved = defragment(memoryArr, processes, t, tMemoryMove)
-                            t += framesMoved*tMemoryMove
-                            i.startTime = t
-                            for k in processes:
-                                if(not k.done):
-                                    if k.running:
-                                        k.startTime += tMemoryMove*framesMoved
-                                    for l in range(k.completed,len(k.endTimes)):
-                                        #k.endTimes[l] += tMemoryMove*framesMoved
-                                        k.arrivalTimes[l] += tMemoryMove*framesMoved
-                            for k in range(len(memoryArr)):
-                                if(memoryArr[k] == '.'):
-                                    for l in range(i.size):
-                                        memoryArr[k+l] = i.name
-                                    break
-                            print("time %dms: Placed process %s:" %(t, i.name))
-                            printMemory(frame, frameSize, memoryArr)
-                            i.running = True
-                        else: #Not eligible for defragmentation
-                            count = 0
-                            location = 0
-                            defragged = False
                             i.completed += 1
                             if(i.completed == len(i.endTimes)):
                                 completed += 1

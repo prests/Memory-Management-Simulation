@@ -4,11 +4,13 @@ import sys
 import process
 
 import FirstFit
+import NonContiguous
 
 def resetProcesses(processes):
     for i in processes:
         i.done = False
         i.completed = 0
+        i.running = False
 
 def main(frames, frameSize, inputFile, tMemoryMove):
     processesList = []
@@ -38,7 +40,7 @@ def main(frames, frameSize, inputFile, tMemoryMove):
 
     FirstFit.main(frames, frameSize, processesList, tMemoryMove, True)
     resetProcesses(processesList)
-    FirstFit.main(frames, frameSize, processesList, tMemoryMove, False)
+    NonContiguous.main(frames, frameSize, processesList, tMemoryMove, False)
 
 
 '''

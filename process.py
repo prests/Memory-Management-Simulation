@@ -8,3 +8,4 @@ class Process(object):
         self.completed = 0
         self.done = False
         self.running = False
+        self.startTime = 0
