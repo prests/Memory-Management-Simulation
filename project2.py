@@ -50,7 +50,7 @@ def main(frames, frameSize, inputFile, tMemoryMove):
 if __name__ == "__main__":
     #Checking size of argument array
     if(len(sys.argv) < 5):
-        print("Invalid number of arguments provided")
+        sys.stderr.write("ERROR: Invalid number of arguments provided\n")
         sys.exit()
 
     #Checking number of frames
@@ -58,15 +58,22 @@ if __name__ == "__main__":
     try:
         frames = int(frames)
     except:
-        print("Invalid number of frames provided (not integer)")
+        sys.stderr.write("ERROR: Invalid number of frames (not integer)\n")
         sys.exit()
+    if(frames < 0):
+        sys.stderr.write("ERROR: Invalid number of frames (negative number)\n")
+        sys.exit()
+
 
     #Checking frame size
     frameSize = sys.argv[2]
     try:
         frameSize = int(frameSize)
     except:
-        print("Invalid frame size provided (not integer)")
+        sys.stderr.write("ERROR: Invalid frame size (not integer)\n")
+        sys.exit()
+    if(frameSize < 0):
+        sys.stderr.write("ERROR: Invalid frame size (negative number)\n")
         sys.exit()
 
     #Checking if input file exists
@@ -74,7 +81,7 @@ if __name__ == "__main__":
         #print(argv[3])
         inputFile = open(sys.argv[3], 'r')
     except:
-        print("Input file does not exist")
+        sys.stderr.write("ERROR: Input file does not exist\n")
         sys.exit()
 
     #Checking time provided to move memory 
@@ -82,7 +89,10 @@ if __name__ == "__main__":
     try:
         tMemoryMove = int(tMemoryMove)
     except:
-        print("Invalid time provided for memory move (not integer)")
+        sys.stderr.write("ERROR: Invalid time for memory move (not integer)\n")
+        sys.exit()
+    if(tMemoryMove < 0):
+        sys.stderr.write("ERROR: Invalid time for memory move (negative number)\n")
         sys.exit()
     
     main(frames, frameSize, inputFile, tMemoryMove)
