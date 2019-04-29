@@ -110,7 +110,7 @@ def main(frame, frameSize, processes, tMemoryMove):
     #print(free_spots)
 
     # start simulation
-    print("time 0ms: Simulator Started (Contiguous -- Next-Fit)")
+    print("time 0ms: Simulator started (Contiguous -- Next-Fit)")
     defrag_token = False
 
     while len(process_queue) != 0:
@@ -165,7 +165,7 @@ def main(frame, frameSize, processes, tMemoryMove):
 
                 if sum >= current_process[3]:
                     defrag_token = True
-                    print("time", str(time)+"ms: Cannot place process", current_process[2], "-- starting defragmentation!")
+                    print("time", str(time)+"ms: Cannot place process", current_process[2], "-- starting defragmentation")
 
                     framesMoved = FirstFit.defragment(memoryArr, processes, time, tMemoryMove)
                     time = (framesMoved*tMemoryMove)+time

@@ -9,13 +9,6 @@ import NextFit
 import NonContiguous
 import BestFit
 
-def resetProcesses(processes):
-    for i in processes:
-        i.done = False
-        i.completed = 0
-        i.running = False
-        i.startTime = 0
-
 def main(frames, frameSize, inputFile, tMemoryMove):
     processesList = []
     for line in inputFile:
@@ -43,14 +36,12 @@ def main(frames, frameSize, inputFile, tMemoryMove):
     '''
     
     processesList_copy = copy.deepcopy(processesList)
-
+    processesList_copy2 = copy.deepcopy(processesList)
+    processesList_copy3 = copy.deepcopy(processesList)
     FirstFit.main(frames, frameSize, processesList, tMemoryMove, True)
-    resetProcesses(processesList)
     NextFit.main(frames, frameSize, processesList_copy, tMemoryMove)
-    resetProcesses(processesList)
-    BestFit.main(frames, frameSize, processesList, tMemoryMove, False)
-    resetProcesses(processesList)
-    NonContiguous.main(frames, frameSize, processesList, tMemoryMove, False)
+    BestFit.main(frames, frameSize, processesList_copy2, tMemoryMove, False)
+    NonContiguous.main(frames, frameSize, processesList_copy3, tMemoryMove, False)
 
 
 '''
