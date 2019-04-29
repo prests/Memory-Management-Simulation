@@ -12,8 +12,11 @@ import BestFit
 def main(frames, frameSize, inputFile, tMemoryMove):
     processesList = []
     for line in inputFile:
+        if(line[0] == "#" or line[0] == " " or line[0] == "\n"):
+            continue
         if(line[len(line)-1] == '\n'):
             line = line[:len(line)-1] 
+        #print(line)
         arr = line.split(' ')
         p = process.Process()
         for i in range(len(arr)):
