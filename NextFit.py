@@ -144,7 +144,7 @@ def main(frame, frameSize, processes, tMemoryMove):
                 last_process = update_index(memoryArr, frameSize, current_process)
 
 
-                current_process[4].size+=current_process[3]
+                # current_process[4].size+=current_process[3]
                 process_queue.pop(0)
 
                 # update free spots
@@ -166,12 +166,12 @@ def main(frame, frameSize, processes, tMemoryMove):
                 if sum >= current_process[3]:
                     defrag_token = True
                     print("time", str(time)+"ms: Cannot place process", current_process[2], "-- starting defragmentation!")
-                    t = time + tMemoryMove
-                    FirstFit.defragment(memoryArr, processes, t)
-                    # FirstFit.printMemory(frame, frameSize, memoryArr)
+
+                    framesMoved = FirstFit.defragment(memoryArr, processes, time, tMemoryMove)
+                    time = (framesMoved*tMemoryMove)+time
 
                     for i in range(0, len(process_queue)):
-                        process_queue[i][0]+=tMemoryMove
+                        process_queue[i][0] += tMemoryMove*framesMoved
 
                     last_process = update_last_index(memoryArr, frameSize)
 
