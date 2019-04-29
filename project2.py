@@ -12,6 +12,7 @@ def resetProcesses(processes):
         i.done = False
         i.completed = 0
         i.running = False
+        i.startTime = 0
 
 def main(frames, frameSize, inputFile, tMemoryMove):
     processesList = []
