@@ -5,6 +5,7 @@ import process
 
 import FirstFit
 import NonContiguous
+import BestFit
 
 def resetProcesses(processes):
     for i in processes:
@@ -39,6 +40,8 @@ def main(frames, frameSize, inputFile, tMemoryMove):
     '''
 
     FirstFit.main(frames, frameSize, processesList, tMemoryMove, True)
+    resetProcesses(processesList)
+    BestFit.main(frames, frameSize, processesList, tMemoryMove, False)
     resetProcesses(processesList)
     NonContiguous.main(frames, frameSize, processesList, tMemoryMove, False)
 
