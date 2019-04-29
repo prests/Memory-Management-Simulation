@@ -3,6 +3,11 @@ import sys
 import process
 import FirstFit
 
+def empty(memoryArr):
+    for i in range(0, len(memoryArr)):
+        if memoryArr[i] != '.':
+            return False
+    return True
 
 def update_index(memoryArr, frameSize, current_process):
 
@@ -165,13 +170,16 @@ def main(frame, frameSize, processes, tMemoryMove):
 
                 if sum >= current_process[3]:
                     defrag_token = True
-                    print("time", str(time)+"ms: Cannot place process", current_process[2], "-- starting defragmentation")
+                    
+                    if empty(memoryArr) == False:
+                    
+                        print("time", str(time)+"ms: Cannot place process", current_process[2], "-- starting defragmentation")
 
-                    framesMoved = FirstFit.defragment(memoryArr, processes, time, tMemoryMove)
-                    time = (framesMoved*tMemoryMove)+time
+                        framesMoved = FirstFit.defragment(memoryArr, processes, time, tMemoryMove)
+                        time = (framesMoved*tMemoryMove)+time
 
-                    for i in range(0, len(process_queue)):
-                        process_queue[i][0] += tMemoryMove*framesMoved
+                        for i in range(0, len(process_queue)):
+                            process_queue[i][0] += tMemoryMove*framesMoved
 
                     last_process = update_last_index(memoryArr, frameSize)
 
