@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 import sys
+import copy
 
 import process
 
 import FirstFit
+import NextFit
 import NonContiguous
 import BestFit
 
@@ -39,8 +41,12 @@ def main(frames, frameSize, inputFile, tMemoryMove):
             print(i.arrivalTimes[j])
             print(i.endTimes[j])
     '''
+    
+    processesList_copy = copy.deepcopy(processesList)
 
     FirstFit.main(frames, frameSize, processesList, tMemoryMove, True)
+    resetProcesses(processesList)
+    NextFit.main(frames, frameSize, processesList_copy, tMemoryMove)
     resetProcesses(processesList)
     BestFit.main(frames, frameSize, processesList, tMemoryMove, False)
     resetProcesses(processesList)
