@@ -224,4 +224,4 @@ def main(frame, frameSize, processes, tMemoryMove):
 
 
     # end simulation
-    print("time", str(time)+ "ms: Simulator ended (Contiguous -- Next-Fit)")
+    print("time", str(time)+ "ms: Simulator ended (Contiguous -- Next-Fit)\n")
