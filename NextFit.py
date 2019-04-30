@@ -168,24 +168,17 @@ def main(frame, frameSize, processes, tMemoryMove):
                     free_spots_post = []
                     find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process)
 
-                    # print(free_spots_pre)
-                    # print(free_spots_post)
-
-                    # print(process_queue)
-                    # break
                     continue
 
                 else:
                     print("time", str(time)+"ms: Cannot place process", current_process[2], "-- skipped!")
-                    # print(process_queue)
+
                     process_queue.pop(0)
                     for i in range(0, len(process_queue)):
                         if current_process[2] in process_queue[i]:
                             index = i
                             break
                     process_queue.pop(index)
-                    # print(process_queue)
-                    # break
 
 
 
