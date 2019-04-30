@@ -5,7 +5,7 @@ import FirstFit
 
 
 def update_index(memoryArr, frameSize, current_process):
-
+    # update curr available index
     for i in range(0, len(memoryArr)):
         if (memoryArr[i-1] == current_process[2]) & (memoryArr[i] != current_process[2]):
             return i
@@ -13,7 +13,7 @@ def update_index(memoryArr, frameSize, current_process):
 
 
 def update_last_index(memoryArr, frameSize):
-
+    # update last available index
     for i in range(0, len(memoryArr)):
         if memoryArr[i] == '.':
             return i
@@ -21,14 +21,14 @@ def update_last_index(memoryArr, frameSize):
 
 
 def check_for_fit(last_process, current_process, free_spots, memoryArr):
-
+    # checks to see if the curr p will fit in any of the free spots
     for i in range(0, len(free_spots)):
         if (free_spots[i][1] >= current_process[3]):
             return True
     return False
 
 def find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process):
-
+    # aggregate all free spots
     i = 0
     while i < len(memoryArr):
 
@@ -52,7 +52,7 @@ def find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process):
             i += 1
 
 def place_process(last_process, current_process, memoryArr, free_spots_pre, free_spots_post):
-
+    # place curr process
     found = False
     for i in range(0, len(free_spots_post)):
         if free_spots_post[i][1] >= current_process[3]:
@@ -75,7 +75,7 @@ def place_process(last_process, current_process, memoryArr, free_spots_pre, free
 
 
 def remove_process(current_process, memoryArr):
-
+    # remove curr process from mem array
     for i in range(0, len(memoryArr)):
         if memoryArr[i] == current_process[2]:
             memoryArr[i] = '.'
@@ -102,19 +102,16 @@ def main(frame, frameSize, processes, tMemoryMove):
             process_queue.append([int(processes[i].endTimes[j])+int(processes[i].arrivalTimes[j]), 1, processes[i].name, processes[i].size, processes[i]])
 
     process_queue.sort()
-    # print(process_queue)
 
     # update free spots
     last_process = 0
     find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process)
-    #print(free_spots)
 
     # start simulation
     print("time 0ms: Simulator Started (Contiguous -- Next-Fit)")
     defrag_token = False
 
     while len(process_queue) != 0:
-
         # prepare for next process
         current_process = process_queue[0]
 
@@ -128,11 +125,6 @@ def main(frame, frameSize, processes, tMemoryMove):
             else:
                 defrag_token = False
 
-
-            # print(free_spots_pre)
-            # print(free_spots_post)
-            # print(last_process)
-
             # check for fit
             fit = check_for_fit(last_process, current_process, free_spots_pre+free_spots_post, memoryArr)
 
@@ -144,7 +136,6 @@ def main(frame, frameSize, processes, tMemoryMove):
                 last_process = update_index(memoryArr, frameSize, current_process)
 
 
-                # current_process[4].size+=current_process[3]
                 process_queue.pop(0)
 
                 # update free spots
@@ -152,9 +143,6 @@ def main(frame, frameSize, processes, tMemoryMove):
                 free_spots_post = []
                 find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process)
 
-                # print(free_spots_pre)
-                # print(free_spots_post)
-                # print(last_process)
 
             else:
 
@@ -207,7 +195,6 @@ def main(frame, frameSize, processes, tMemoryMove):
             # remove process
             remove_process(current_process, memoryArr)
             FirstFit.printMemory(frame, frameSize, memoryArr)
-            # current_process[4].completed+=1
 
             process_queue.pop(0)
 
@@ -215,12 +202,6 @@ def main(frame, frameSize, processes, tMemoryMove):
             free_spots_pre = []
             free_spots_post = []
             find_free_spots(memoryArr, free_spots_pre, free_spots_post, last_process)
-
-            # print(free_spots_pre)
-            # print(free_spots_post)
-
-            # update last process
-            # last_process = update_last_index(last_process, memoryArr)
 
 
     # end simulation

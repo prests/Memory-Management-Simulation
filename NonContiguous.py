@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 def printMemory(frame, frameSize, memoryArr):
+    # print output
     print('='*frame)
     for i in range(frameSize):
         if(((i+1)%frame == 0 and i != 0) or i == frameSize-1):
@@ -11,13 +12,6 @@ def printMemory(frame, frameSize, memoryArr):
 
 def defragment(memoryArr, processes, t, tMemoryMove):
     moved = []
-    '''
-    for i in range(len(memoryArr)):
-        if(memoryArr[i] == '.'):
-            for j in range(i,len(memoryArr)):
-                if(memoryArr[j] != '.'):
-                    moved.append(memoryArr[j])
-    '''
 
     #Bubble sort by .'s
     for i in range(len(memoryArr)):
